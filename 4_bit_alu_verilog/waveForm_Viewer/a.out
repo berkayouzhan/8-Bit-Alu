@@ -1,0 +1,157 @@
+#! /usr/share/iverilog-0.10.0/bin/vvp
+:ivl_version "0.10.0 (devel)" "(v0_9_6)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+:vpi_module "v2009";
+S_0x1e09710 .scope module, "testbench" "testbench" 2 3;
+ .timescale -9 -12;
+v0x1e1da60_0 .var "operandA", 3 0;
+v0x1e1db40_0 .var "operandB", 3 0;
+v0x1e1dc10_0 .var "operation", 2 0;
+v0x1e1dd10_0 .net "result", 7 0, v0x1e1d7d0_0;  1 drivers
+v0x1e1dde0_0 .net "zeroFlag", 0 0, v0x1e1d8b0_0;  1 drivers
+S_0x1e067b0 .scope module, "myALU" "ALU" 2 10, 3 3 0, S_0x1e09710;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 4 "operandA"
+    .port_info 1 /INPUT 4 "operandB"
+    .port_info 2 /INPUT 3 "operation"
+    .port_info 3 /OUTPUT 8 "result"
+    .port_info 4 /OUTPUT 1 "zeroFlag"
+v0x1e06a00_0 .net "operandA", 3 0, v0x1e1da60_0;  1 drivers
+v0x1e1d600_0 .net "operandB", 3 0, v0x1e1db40_0;  1 drivers
+v0x1e1d6e0_0 .net "operation", 2 0, v0x1e1dc10_0;  1 drivers
+v0x1e1d7d0_0 .var "result", 7 0;
+v0x1e1d8b0_0 .var "zeroFlag", 0 0;
+E_0x1e09c40 .event edge, v0x1e1d6e0_0, v0x1e06a00_0, v0x1e1d600_0, v0x1e1d7d0_0;
+    .scope S_0x1e067b0;
+T_0 ;
+    %wait E_0x1e09c40;
+    %load/v 8, v0x1e1d6e0_0, 3;
+    %cmpi/u 8, 0, 3;
+    %jmp/1 T_0.0, 6;
+    %cmpi/u 8, 1, 3;
+    %jmp/1 T_0.1, 6;
+    %cmpi/u 8, 2, 3;
+    %jmp/1 T_0.2, 6;
+    %cmpi/u 8, 3, 3;
+    %jmp/1 T_0.3, 6;
+    %cmpi/u 8, 4, 3;
+    %jmp/1 T_0.4, 6;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x1e1d7d0_0, 0, 0;
+    %jmp T_0.6;
+T_0.0 ;
+    %load/v 8, v0x1e06a00_0, 4;
+    %pad 12, 0, 4;
+    %load/v 16, v0x1e1d600_0, 4;
+    %pad 20, 0, 4;
+    %add 8, 16, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x1e1d7d0_0, 0, 8;
+    %jmp T_0.6;
+T_0.1 ;
+    %load/v 8, v0x1e06a00_0, 4;
+    %pad 12, 0, 4;
+    %load/v 16, v0x1e1d600_0, 4;
+    %pad 20, 0, 4;
+    %sub 8, 16, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x1e1d7d0_0, 0, 8;
+    %jmp T_0.6;
+T_0.2 ;
+    %load/v 8, v0x1e06a00_0, 4;
+    %pad 12, 0, 4;
+    %load/v 16, v0x1e1d600_0, 4;
+    %pad 20, 0, 4;
+    %and 8, 16, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x1e1d7d0_0, 0, 8;
+    %jmp T_0.6;
+T_0.3 ;
+    %load/v 8, v0x1e06a00_0, 4;
+    %pad 12, 0, 4;
+    %load/v 16, v0x1e1d600_0, 4;
+    %pad 20, 0, 4;
+    %or 8, 16, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x1e1d7d0_0, 0, 8;
+    %jmp T_0.6;
+T_0.4 ;
+    %load/v 8, v0x1e06a00_0, 4;
+    %pad 12, 0, 4;
+    %load/v 16, v0x1e1d600_0, 4;
+    %pad 20, 0, 4;
+    %mul 8, 16, 8;
+    %ix/load 0, 8, 0;
+    %assign/v0 v0x1e1d7d0_0, 0, 8;
+    %jmp T_0.6;
+T_0.6 ;
+    %load/v 8, v0x1e1d7d0_0, 8;
+    %cmpi/u 8, 0, 8;
+    %mov 8, 4, 1;
+    %jmp/0  T_0.7, 8;
+    %movi 9, 1, 2;
+    %jmp/1  T_0.9, 8;
+T_0.7 ; End of true expr.
+    %jmp/0  T_0.8, 8;
+ ; End of false expr.
+    %blend  9, 0, 2; Condition unknown.
+    %jmp  T_0.9;
+T_0.8 ;
+    %mov 9, 0, 2; Return false value
+T_0.9 ;
+    %ix/load 0, 1, 0;
+    %assign/v0 v0x1e1d8b0_0, 0, 9;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_0x1e09710;
+T_1 ;
+    %vpi_call/w 2 19 "$dumpfile", "dump.vcd" {0 0};
+    %vpi_call/w 2 20 "$dumpvars" {0 0};
+    %movi 8, 13, 4;
+    %set/v v0x1e1da60_0, 8, 4;
+    %movi 8, 10, 4;
+    %set/v v0x1e1db40_0, 8, 4;
+    %set/v v0x1e1dc10_0, 0, 3;
+    %delay 10000, 0;
+    %movi 8, 13, 4;
+    %set/v v0x1e1da60_0, 8, 4;
+    %movi 8, 10, 4;
+    %set/v v0x1e1db40_0, 8, 4;
+    %movi 8, 1, 3;
+    %set/v v0x1e1dc10_0, 8, 3;
+    %delay 10000, 0;
+    %movi 8, 13, 4;
+    %set/v v0x1e1da60_0, 8, 4;
+    %movi 8, 10, 4;
+    %set/v v0x1e1db40_0, 8, 4;
+    %movi 8, 2, 3;
+    %set/v v0x1e1dc10_0, 8, 3;
+    %delay 10000, 0;
+    %movi 8, 13, 4;
+    %set/v v0x1e1da60_0, 8, 4;
+    %movi 8, 10, 4;
+    %set/v v0x1e1db40_0, 8, 4;
+    %movi 8, 3, 3;
+    %set/v v0x1e1dc10_0, 8, 3;
+    %delay 10000, 0;
+    %movi 8, 13, 4;
+    %set/v v0x1e1da60_0, 8, 4;
+    %movi 8, 10, 4;
+    %set/v v0x1e1db40_0, 8, 4;
+    %movi 8, 4, 3;
+    %set/v v0x1e1dc10_0, 8, 3;
+    %delay 10000, 0;
+    %vpi_call/w 2 46 "$finish" {0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testbench.sv";
+    "design.sv";
